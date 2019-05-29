@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from setuptools import find_packages, setup
 
-from python_stub.version import __version__
+from findsecbugs_parser.version import __version__
 
 setup(
-    name='python-stub',
+    name='findsecbugs-parser',
     version=__version__,
     author='amon',
     author_email='amon@nandynarwhals.org',
-    description='This provides a python library template.',
+    description='Parses FindSecBugs XML output.',
     packages=find_packages(),
     setup_requires=[
         'pytest-runner',
@@ -25,5 +25,5 @@ setup(
         'console_scripts': [
         ],
     },
-    url='https://github.com/nnamon/python-stub'
+    url='https://github.com/nnamon/findsecbugs-python-parser'
 )

@@ -6,7 +6,8 @@ from __future__ import unicode_literals
 import os
 from distutils import dir_util
 
-from findsecbugs_parser.fsb import (BugCollection, ClassFeatures, Errors,
+from findsecbugs_parser.fsb import (BugClass, BugCollection, BugInstance,
+                                    BugMethod, ClassFeatures, Errors,
                                     FindBugsProfile, FindBugsSummary, History,
                                     PackageStats, Project, ReportParser)
 from pytest import fixture
@@ -113,3 +114,40 @@ def test_reportparser_parsed_history(parsedreport):
     assert parsedreport.bugcollection.history is not None
     assert type(parsedreport.bugcollection.history) is History
     # errors = parsedreport.bugcollection.history
+
+
+def test_reportparser_parsed_buginstances(parsedreport):
+    assert parsedreport.bugcollection.buginstances is not None
+    assert type(parsedreport.bugcollection.buginstances) is list
+    bi = parsedreport.bugcollection.buginstances
+    assert len(bi) > 0
+    assert False not in (type(bi_item) is BugInstance for bi_item in bi)
+    bi_item = bi[0]
+    assert bi_item.type is not None
+    assert bi_item.priority is not None
+    assert bi_item.rank is not None
+    assert bi_item.abbrev is not None
+    assert bi_item.category is not None
+    assert bi_item.strings is not None
+    assert bi_item.bug_class is not None
+    assert bi_item.bug_method is not None
+    assert bi_item.sourcelines is not None
+
+
+def test_reportparsed_parsed_bugclass(parsedreport):
+    bi_item = parsedreport.bugcollection.buginstances[0]
+    bc = bi_item.bug_class
+    assert type(bc) is BugClass
+    assert bc.classname is not None
+    assert bc.sourcelines is not None
+
+
+def test_reportparsed_parsed_bugmethod(parsedreport):
+    bi_item = parsedreport.bugcollection.buginstances[0]
+    bm = bi_item.bug_method
+    assert type(bm) is BugMethod
+    assert bm.classname is not None
+    assert bm.name is not None
+    assert bm.signature is not None
+    assert bm.isStatic is not None
+    assert bm.sourcelines is not None

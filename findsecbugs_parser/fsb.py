@@ -166,13 +166,22 @@ class BugInstance:
 class BugClass:
 
     def __init__(self, bc_root):
-        pass
+        attribs = bc_root.attrib
+        self.classname = attribs.get('classname', 'N/A')
+
+        self.sourcelines = SourceLines(bc_root)
 
 
 class BugMethod:
 
     def __init__(self, bm_root):
-        pass
+        attribs = bm_root.attrib
+        self.classname = attribs.get('classname', 'N/A')
+        self.name = attribs.get('name', 'N/A')
+        self.signature = attribs.get('signature', 'N/A')
+        self.isStatic = attribs.get('isStatic', 'N/A')
+
+        self.sourcelines = SourceLines(bm_root)
 
 
 class SourceLines:
